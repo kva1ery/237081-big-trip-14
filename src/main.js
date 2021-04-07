@@ -1,4 +1,5 @@
 'use strict';
+
 import {createSiteMenuTemplate} from './view/site-menu.js';
 import {createTripInfoTemplate} from './view/trip-info.js';
 import {createTripCostTemplate} from './view/trip-cost.js';
@@ -7,8 +8,10 @@ import {createEventsSortTemplate} from './view/events-sort.js';
 import {createEventsListTemplate} from './view/events-list.js';
 import {createEventTemplate} from './view/event.js';
 import {createEditEventFormTemplate} from './view/edit-event.js';
+import {generateEvent} from './mock/event.js';
 
 const EVENT_COUNT = 3;
+const events = new Array(EVENT_COUNT).fill().map(generateEvent);
 
 const render = (container, template, place='beforeEnd') => {
   container.insertAdjacentHTML(place, template);
@@ -31,7 +34,7 @@ render(tripEventsElement, createEventsListTemplate());
 const eventsListElement = tripEventsElement.querySelector('.trip-events__list');
 render(eventsListElement, createEditEventFormTemplate());
 
-for (let i = 0; i < EVENT_COUNT; i++) {
-  render(eventsListElement, createEventTemplate());
+for (const event of events) {
+  render(eventsListElement, createEventTemplate(event));
 }
 
